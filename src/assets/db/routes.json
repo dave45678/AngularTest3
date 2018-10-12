@@ -1,0 +1,3 @@
+{
+  "/courses\\?id=:id": "/courses/:id"
+}
