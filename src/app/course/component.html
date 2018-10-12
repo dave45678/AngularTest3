@@ -1,0 +1,57 @@
+<h1>Angular 4 CRUD Example</h1>
+<h3 *ngIf="courseIdToUpdate; else create">
+  Update Course for Id: {{courseIdToUpdate}}
+</h3>
+<ng-template #create>
+  <h3> Create New Course </h3>
+</ng-template>
+<div>
+  <form [formGroup]="courseForm" (ngSubmit)="onCourseFormSubmit()">
+    <table>
+      <tr><td>Enter Title</td><td><input formControlName="title">
+        <label *ngIf="courseForm.get('title').invalid && processValidation" [ngClass] = "'error'"> Title is required. </label>
+      </td></tr>
+      <tr><td>Enter Instructor</td><td><input formControlName="instructor">
+        <label *ngIf="courseForm.get('instructor').invalid && processValidation" [ngClass] = "'error'"> Instructor is required. </label>
+      </td></tr>
+      <tr><td>Enter Number of Credits</td><td><input formControlName="credit">
+        <label *ngIf="courseForm.get('credit').invalid && processValidation" [ngClass] = "'error'"> Credit is required. </label>
+      </td></tr>
+      <tr><td colspan="2">
+        <button *ngIf="!courseIdToUpdate">CREATE</button>
+        <button *ngIf="courseIdToUpdate">UPDATE</button>
+        <button (click)="backToCreateCourse()" *ngIf="courseIdToUpdate">Go Back</button>
+      </td></tr>
+    </table>
+  </form>
+  <br/>
+  <div *ngIf="statusCode; else processing">
+    <div *ngIf="statusCode === 201" [ngClass] = "'success'">
+      Course added successfully.
+    </div>
+    <div *ngIf="statusCode === 409" [ngClass] = "'success'">
+      Course already exists.
+    </div>
+    <div *ngIf="statusCode === 200" [ngClass] = "'success'">
+      Course updated successfully.
+    </div>
+    <div *ngIf="statusCode === 204" [ngClass] = "'success'">
+      Course deleted successfully.
+    </div>
+    <div *ngIf="statusCode === 500" [ngClass] = "'error'">
+      Internal Server Error.
+    </div>
+  </div>
+  <ng-template #processing>
+    <img *ngIf="requestProcessing" src="assets/images/waiting.gif">
+  </ng-template>
+</div>
+<h3>Course Details</h3>
+<table>
+  <tr><th> Id</th> <th>Title</th><th>Category</th><th></th><th></th></tr>
+  <tr *ngFor="let course of allCourses" >
+    <td>{{course.id}}</td> <td>{{course.title}}</td> <td>{{course.instructor}}</td>
+    <td><button type="button" (click)="loadCourseToEdit(course.id)">Edit</button> </td>
+    <td><button type="button" (click)="deleteCourse(course.id)">Delete</button></td>
+  </tr>
+</table>

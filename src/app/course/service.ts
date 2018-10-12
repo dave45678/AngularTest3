@@ -1,10 +1,10 @@
 // src/app/course.service.ts
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, URLSearchParams, RequestOptions } from '@angular/http';
+import 'rxjs';
 import { Observable } from 'rxjs';
 import {catchError} from 'rxjs/internal/operators';
-import 'rxjs';
-import { map } from 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 import { Course } from './course';
 
 
@@ -19,7 +19,7 @@ export class CourseService {
   getAllCourses(): Observable<Course[]> {
     console.log('Fetch all courses....');
     return this.http.get(this.courseUrl)
-    .pipe(map(success => success.status));
+    .pipe(map(success => success.json()));
     catchError(this.handleError);
   }
 // Create course
@@ -28,7 +28,7 @@ export class CourseService {
     const cpHeaders = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: cpHeaders });
     return this.http.post(this.courseUrl, course, options)
-      .pipe(map(success => success.status));
+      .pipe(map(success => success.json()));
       catchError(this.handleError);
   }
 // Fetch course by id
@@ -37,7 +37,7 @@ export class CourseService {
     const options = new RequestOptions({ headers: cpHeaders });
     console.log(this.courseUrl + '/' + courseId);
     return this.http.get(this.courseUrl + '/' + courseId)
-      .pipe(map(success => success.status));
+      .pipe(map(success => success.json()));
       catchError(this.handleError);
   }
 //  Update course
@@ -45,7 +45,7 @@ export class CourseService {
     const cpHeaders = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({ headers: cpHeaders });
     return this.http.put(this.courseUrl + '/' + course.id, course, options)
-      .pipe(map(success => success.status));
+      .pipe(map(success => success.json()));
        catchError(this.handleError);
   }
 // Delete course
@@ -53,7 +53,7 @@ export class CourseService {
     const cpHeaders = new Headers({ 'Content-Type': 'application/json' });
     const course = new RequestOptions({ headers: cpHeaders });
     return this.http.delete(this.courseUrl + '/' + courseId)
-      .pipe(map(success => success.status));
+      .pipe(map(success => success.json()));
       catchError(this.handleError);
   }
   private extractData(res: Response) {
