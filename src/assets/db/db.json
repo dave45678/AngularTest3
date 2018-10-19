@@ -2,15 +2,9 @@
   "courses": [
     {
       "title": "Spring Intro",
+      "credit": "4",
       "instructor": "Simpson",
-      "credit": 3,
       "id": 2
-    },
-    {
-      "title": "ssss",
-      "credit": "7",
-      "instructor": "sssss",
-      "id": 3
     }
   ]
 }
