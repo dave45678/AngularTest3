@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { CourseComponent } from './course/component';
 import { CourseService } from './course/service';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { CourseService } from './course/service';
   ],
   declarations: [
     AppComponent,
-    CourseComponent
+    CourseComponent,
+    UsersComponent
   ],
   providers: [
     CourseService
